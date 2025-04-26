@@ -1,0 +1,55 @@
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 128px); 
+    background-color: #1e293b; 
+    padding: 32px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.toolbar {
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.title {
+    color: #1976d2; 
+    margin-bottom: 16px;
+}
+
+.new-button {
+    background-color: #1976d2;
+    color: white;
+    border-radius: 8px;
+    text-transform: none;
+}
+
+.new-button:hover {
+    background-color: #1565c0;
+}
+
+.table-header-cell {
+    font-weight: bold;
+    color: #e0f2ff; 
+}
+
+.table-cell {
+    color: #cbd5e1;
+}
+
+.actions-button {
+    margin: 0 4px;
+}

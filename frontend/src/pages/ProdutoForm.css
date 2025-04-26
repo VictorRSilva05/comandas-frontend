@@ -1,0 +1,62 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 128px); 
+    background-color: #1e293b; 
+    padding: 32px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 600px;
+}
+
+.title {
+    color: #1976d2; /* azul forte */
+    font-weight: bold;
+}
+
+.textfield label,
+.select-group label {
+    color: #e0f2ff !important; /* azul clarinho nos labels */
+}
+
+.textfield input,
+.select-group .MuiSelect-select {
+    color: #cbd5e1; /* cinza claro no texto */
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.cancel-button {
+    background-color: transparent;
+    color: #94a3b8; /* cinza clarinho */
+    border: 1px solid #94a3b8;
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-transform: none;
+}
+
+.cancel-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.MuiButton-contained {
+    background-color: #1976d2 !important;
+    color: white;
+    text-transform: none;
+    border-radius: 8px;
+}
+
+.MuiButton-contained:hover {
+    background-color: #1565c0 !important;
+}

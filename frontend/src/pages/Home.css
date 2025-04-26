@@ -1,0 +1,36 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.title {
+    color: #1976d2; 
+    margin-bottom: 16px;
+}
+
+.subtitle {
+    color: #e0f2ff;
+}
+
+.description {
+    color: #cbd5e1;
+    margin-top: 8px;
+}
+
+.date {
+    color: #94a3b8;
+    margin-top: 16px;
+    display: block;
+}
