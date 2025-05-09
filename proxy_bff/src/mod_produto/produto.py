@@ -4,13 +4,13 @@ from funcoes import Funcoes
 
 bp_produto = Blueprint('produto', __name__, url_prefix="/api/produto")
 
-# Rota para Listar todos os Produtos (GET /produto/all)
+# Rota para Listar todos os Produtos 
 @bp_produto.route('/all', methods=['GET'])
 def get_produtos():
     response_data, status_code = Funcoes.make_api_request('get', API_ENDPOINT_PRODUTO)
     return jsonify(response_data), status_code
 
-# Rota para Obter um Produto Específico (GET /produto/one?id_produto=123)
+# Rota para Obter um Produto Específico
 @bp_produto.route('/one', methods=['GET'])
 def get_produto():
     id_produto = request.args.get('id_produto')
@@ -19,7 +19,7 @@ def get_produto():
     response_data, status_code = Funcoes.make_api_request('get', f"{API_ENDPOINT_PRODUTO}{id_produto}")
     return jsonify(response_data), status_code
 
-# Rota para Criar um novo Produto (POST /produto/)
+# Rota para Criar um novo Produto
 @bp_produto.route('/', methods=['POST'])
 def create_produto():
     if not request.is_json:
@@ -31,7 +31,7 @@ def create_produto():
     response_data, status_code = Funcoes.make_api_request('post', API_ENDPOINT_PRODUTO, data=data)
     return jsonify(response_data), status_code
 
-# Rota para Atualizar um Produto existente (PUT /produto/?id_produto=123)
+# Rota para Atualizar um Produto existente
 @bp_produto.route('/', methods=['PUT'])
 def update_produto():
     id_produto = request.args.get('id_produto')
@@ -47,7 +47,7 @@ def update_produto():
     response_data, status_code = Funcoes.make_api_request('put', f"{API_ENDPOINT_PRODUTO}{id_produto}", data=data)
     return jsonify(response_data), status_code
 
-# Rota para Deletar um Produto (DELETE /produto/?id_produto=123)
+# Rota para Deletar um Produto
 @bp_produto.route('/', methods=['DELETE'])
 def delete_produto():
     id_produto = request.args.get('id_produto')
