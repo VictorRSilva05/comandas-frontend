@@ -15,6 +15,7 @@
     width: 100%;
     max-width: 1000px;
     text-align: center;
+    overflow-x: auto;
 }
 
 .toolbar {
@@ -52,4 +53,9 @@
 
 .actions-button {
     margin: 0 4px;
+    transition: transform 0.2s ease;
+}
+
+.actions-button:hover {
+    transform: scale(1.1);
 }

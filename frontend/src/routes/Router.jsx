@@ -32,6 +32,8 @@ const AppRoutes = () => {
                 <Route path="/home" element={<PrivateRoute> <Home /> </PrivateRoute>} />
                 <Route path="/funcionarios" element={<PrivateRoute> <FuncionarioList /> </PrivateRoute>} />
                 <Route path="/funcionario" element={<PrivateRoute> <FuncionarioForm /> </PrivateRoute>} />
+                {/* Rota para editar ou visualizar funcionário, com opr {view ou edit} e id dinâmico */}
+                <Route path="/funcionario/:opr/:id" element={<PrivateRoute> <FuncionarioForm /> </PrivateRoute>} />
                 <Route path="/clientes" element={<PrivateRoute> <ClienteList /> </PrivateRoute>} />
                 <Route path="/cliente" element={<PrivateRoute> <ClienteForm /> </PrivateRoute>} />
                 <Route path="/produtos" element={<PrivateRoute> <ProdutoList /> </PrivateRoute>} />
