@@ -53,3 +53,12 @@
 .actions-button {
     margin: 0 4px;
 }
+
+.MuiTableHead-root {
+    background-color: transparent !important;
+  }
+  
+  .MuiTableCell-head {
+    background-color: transparent !important;
+  }
+  
