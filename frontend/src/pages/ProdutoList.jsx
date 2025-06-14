@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    IconButton, Typography, Button, Toolbar, useMediaQuery
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    IconButton, Typography, Button, Box, useMediaQuery
 } from '@mui/material';
-import { Edit, Delete, Visibility, FiberNew } from '@mui/icons-material';
+import { Edit, Delete, Visibility, FiberNew, PictureAsPdf } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { getProdutos, deleteProduto } from '../services/produtoService';
 import { toast } from 'react-toastify';
 import './ProdutoList.css';
+import { gerarRelatorioPDF } from '../utils/pdfReport';
 
 function ProdutoList() {
     const navigate = useNavigate();
@@ -68,43 +69,65 @@ function ProdutoList() {
         }
     };
 
+    const handleExportPDF = () => {
+        const colunas = ['ID', 'Nome', 'Valor', 'Descrição'];
+        const dados = produtos.map(p => ({
+            ID: p.id_produto,
+            Nome: p.nome,
+            Valor: `R$ ${p.valor_unitario.toFixed(2)}`,
+            Descrição: p.descricao || '-',
+            foto: p.foto || null
+        }));
+        gerarRelatorioPDF({
+            titulo: 'Relatório de Produtos',
+            colunas,
+            dados,
+            incluirImagem: true
+        });
+    };
+
     return (
         <div className="table-container">
             <div className="card">
-                <Toolbar className="toolbar">
-                    <Typography variant="h6" className="title">Produtos</Typography>
-                    <Button
-                        className="new-button"
-                        onClick={() => navigate('/produto')}
-                        startIcon={<FiberNew />}
-                    >
-                        Novo
-                    </Button>
-                </Toolbar>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Typography variant="h6">Produtos</Typography>
+                    <Box display="flex" gap={1}>
+                        <Button className="pdf-button" onClick={handleExportPDF} startIcon={<PictureAsPdf />}>
+                            Exportar PDF
+                        </Button>
+                        <Button
+                            onClick={() => navigate('/produto')}
+                            startIcon={<FiberNew />}
+                            variant="contained"
+                        >
+                            Novo
+                        </Button>
+                    </Box>
+                </Box>
 
                 <TableContainer>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell className="table-header-cell">ID</TableCell>
-                                <TableCell className="table-header-cell">Nome</TableCell>
-                                <TableCell className="table-header-cell">Valor</TableCell>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Nome</TableCell>
+                                <TableCell>Valor</TableCell>
                                 {!isSmallScreen && (
                                     <>
-                                        <TableCell className="table-header-cell">Foto</TableCell>
-                                        <TableCell className="table-header-cell">Descrição</TableCell>
+                                        <TableCell>Foto</TableCell>
+                                        <TableCell>Descrição</TableCell>
                                     </>
                                 )}
-                                <TableCell className="table-header-cell">Ações</TableCell>
+                                <TableCell>Ações</TableCell>
                             </TableRow>
                         </TableHead>
 
                         <TableBody>
                             {produtos.map((produto) => (
                                 <TableRow key={produto.id_produto}>
-                                    <TableCell className="table-cell">{produto.id_produto}</TableCell>
-                                    <TableCell className="table-cell">{produto.nome}</TableCell>
-                                    <TableCell className="table-cell">R$ {produto.valor_unitario.toFixed(2)}</TableCell>
+                                    <TableCell>{produto.id_produto}</TableCell>
+                                    <TableCell>{produto.nome}</TableCell>
+                                    <TableCell>R$ {produto.valor_unitario.toFixed(2)}</TableCell>
                                     {!isSmallScreen && (
                                         <>
                                             <TableCell>
@@ -120,17 +143,17 @@ function ProdutoList() {
                                                     </Typography>
                                                 )}
                                             </TableCell>
-                                            <TableCell className="table-cell">{produto.descricao}</TableCell>
+                                            <TableCell>{produto.descricao}</TableCell>
                                         </>
                                     )}
                                     <TableCell>
-                                        <IconButton className="actions-button" onClick={() => navigate(`/produto/view/${produto.id_produto}`)}>
+                                        <IconButton onClick={() => navigate(`/produto/view/${produto.id_produto}`)}>
                                             <Visibility color="primary" />
                                         </IconButton>
-                                        <IconButton className="actions-button" onClick={() => navigate(`/produto/edit/${produto.id_produto}`)}>
+                                        <IconButton onClick={() => navigate(`/produto/edit/${produto.id_produto}`)}>
                                             <Edit color="secondary" />
                                         </IconButton>
-                                        <IconButton className="actions-button" onClick={() => handleDeleteClick(produto)}>
+                                        <IconButton onClick={() => handleDeleteClick(produto)}>
                                             <Delete color="error" />
                                         </IconButton>
                                     </TableCell>
