@@ -3,12 +3,13 @@ import {
     Table, TableBody, TableCell, TableContainer, TableHead,
     TableRow, IconButton, Typography, Button, Toolbar, useMediaQuery
 } from '@mui/material';
-import { Edit, Delete, Visibility, FiberNew } from '@mui/icons-material';
+import { Edit, Delete, Visibility, FiberNew, PictureAsPdf } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getClientes, deleteCliente } from '../../src/services/clienteService';
 import { toast } from 'react-toastify';
 import { useTheme } from '@mui/material/styles';
 import './ClienteList.css';
+import { gerarRelatorioPDF } from '../utils/pdfReport';
 
 function ClienteList() {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function ClienteList() {
 
     const fetchClientes = async () => {
         try {
-            const data = await getClientes(); 
+            const data = await getClientes();
             setClientes(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Erro ao buscar clientes:', error);
@@ -69,14 +70,38 @@ function ClienteList() {
         }
     };
 
+    const handleExportarPDF = () => {
+        const colunas = ['ID', 'Nome', 'CPF', 'Telefone'];
+
+        const dados = clientes.map(c => ({
+            ID: c.id_cliente,
+            Nome: c.nome,
+            CPF: c.cpf,
+            Telefone: c.telefone,
+            foto: c.foto || null
+        }));
+
+        gerarRelatorioPDF({
+            titulo: "Relatório de Clientes",
+            colunas,
+            dados,
+            incluirImagem: true
+        });
+    };
+
     return (
         <div className="table-container">
             <div className="card">
                 <Toolbar className="toolbar">
                     <Typography variant="h6" className="title">Clientes</Typography>
-                    <Button className="new-button" onClick={() => navigate('/cliente')} startIcon={<FiberNew />}>
-                        Novo
-                    </Button>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <Button className="pdf-button" onClick={handleExportarPDF} startIcon={<PictureAsPdf />}>
+                            Exportar PDF
+                        </Button>
+                        <Button className="new-button" onClick={() => navigate('/funcionario')} startIcon={<FiberNew />}>
+                            Novo
+                        </Button>
+                    </div>
                 </Toolbar>
                 <Table>
                     <TableHead>

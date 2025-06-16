@@ -3,12 +3,13 @@ import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
     IconButton, Typography, Button, Toolbar, useMediaQuery
 } from '@mui/material';
-import { Edit, Delete, Visibility, FiberNew } from '@mui/icons-material';
+import { Edit, Delete, Visibility, FiberNew, PictureAsPdf } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getFuncionarios, deleteFuncionario } from '../services/funcionarioService';
 import { toast } from 'react-toastify';
 import { useTheme } from '@mui/material/styles';
 import './FuncionarioList.css';
+import { gerarRelatorioPDF } from '../utils/pdfReport';
 
 function FuncionarioList() {
     const navigate = useNavigate();
@@ -68,14 +69,39 @@ function FuncionarioList() {
         }
     };
 
+    const handleExportarPDF = () => {
+        const colunas = ['ID', 'Nome', 'CPF', 'Matrícula'];
+    
+        const dados = funcionarios.map(f => ({
+            ID: f.id_funcionario,
+            Nome: f.nome,
+            CPF: f.cpf,
+            Matrícula: f.matricula,
+            foto: f.foto || null
+        }));
+    
+        gerarRelatorioPDF({
+            titulo: "Relatório de Funcionários",
+            colunas,
+            dados,
+            incluirImagem: true 
+        });
+    };
+    
+
     return (
         <div className="table-container">
             <div className="card">
                 <Toolbar className="toolbar">
                     <Typography variant="h6" className="title">Funcionários</Typography>
-                    <Button className="new-button" onClick={() => navigate('/funcionario')} startIcon={<FiberNew />}>
-                        Novo
-                    </Button>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                        <Button className="pdf-button" onClick={handleExportarPDF} startIcon={<PictureAsPdf />}>
+                            Exportar PDF
+                        </Button>
+                        <Button className="new-button" onClick={() => navigate('/funcionario')} startIcon={<FiberNew />}>
+                            Novo
+                        </Button>
+                    </div>
                 </Toolbar>
                 <Table>
                     <TableHead>
@@ -123,4 +149,3 @@ function FuncionarioList() {
 }
 
 export default FuncionarioList;
- 
