@@ -34,3 +34,21 @@
     margin-top: 16px;
     display: block;
 }
+
+.perfil {
+    margin-top: 12px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.administrador {
+    background-color: #1e40af;
+    color: #e0f2ff;
+}
+
+.funcionário {
+    background-color: #065f46;
+    color: #d1fae5;
+}

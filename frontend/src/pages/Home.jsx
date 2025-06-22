@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import './Home.css';
 
 const Home = () => {
+    const tipoUsuario = sessionStorage.getItem("tipoUsuario");
     return (
         <Box className="home-container">
             <Box className="card">
@@ -18,6 +19,11 @@ const Home = () => {
                 <Typography variant="caption" className="date">
                     {`Data atual: ${new Date().toLocaleDateString()}`}
                 </Typography>
+                {tipoUsuario && (
+                    <Typography variant="body1" className={`perfil ${tipoUsuario.toLowerCase()}`}>
+                        Perfil: {tipoUsuario}
+                    </Typography>
+                )}
             </Box>
         </Box>
     );
